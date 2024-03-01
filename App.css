@@ -1,3 +1,49 @@
 #container {
-    background-color: yellow;
+  background-color: yellow;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  background-color: #e0e0e0;
+  border-radius: 0.5rem;
+  box-shadow: 0px 5px 10px #adadad;
+}
+
+.navlogo {
+    width: 3rem;
+}
+
+.navlogo img {
+    width: 100%;
+    height: auto;
+}
+
+.navlinks {
+    list-style: none;
+    display: flex;
+    column-gap: 1rem;
+    padding: 0rem 1.5rem;
+    align-items: center;
+}
+
+.navlinks li a {
+    text-decoration: none;
+    color: #727272;
+    font-size: 1.25rem;
+    font-family: monospace
+}
+
+.search-bar-container {
+    width: 30%;
+}
+
+.search-bar-container input {
+    width: 100%;
+    border: 0px;
+    padding: 0.25rem 1rem;
+    border-radius: 1rem;
+    box-shadow: 0px 5px 10px #c5c5c5;
 }

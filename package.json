@@ -11,6 +11,8 @@
   "author": "Prathamesh Ramane",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "parcel": "^2.11.0",
     "process": "^0.11.10"
   },
@@ -18,7 +20,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "browserlist": [
+  "browserslist": [
     "last 4 versions"
   ]
- }
+}
