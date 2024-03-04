@@ -1,62 +1,56 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import logo from "./assets/Portfolio Logo Circle.png";
+import logo from "./assets/logo.png";
+import { RESTAURANTS } from "./restaurants";
 
-const containerUsingCreateElement = React.createElement(
-  "div",
-  { id: "container", className: "title" },
-  [
-    React.createElement("h1", {}, "Heading from CE"),
-    React.createElement("h2", {}, "Heading 2 from CE"),
-    React.createElement("h3", {}, "Heading 3 from CE"),
-  ]
-);
-
-const containerUsingJSX = (
-  <div id="container" className="title">
-    <h1>Heading 1</h1>
-    <h2>Heading 2</h2>
-    <h3>Heading 3</h3>
-  </div>
-);
-
-const TitleComponent = () => <h1>Namaste Everyone!</h1>;
-
-const ContainerComponent = () => (
-  <div id="container" className="title">
-    <TitleComponent />
-    <h1 key="1">Heading 1 from FC</h1>
-    <h2 key="2">Heading 2 from FC</h2>
-    <h3 key="3">Heading 3 from FC</h3>
-  </div>
-);
-
-const HeaderLink = ({ name }) => (
-  <li>
-    <a href="#">{name}</a>
-  </li>
-);
-
-const SearchBar = () => (
-  <div className="search-bar-container">
-    <input type="text" placeholder="Search" />
-  </div>
-)
-
-const NavBarComponent = () => (
+const Header = () => (
   <div className="navbar">
     <div className="navlogo">
       <img src={logo} alt="logo" />
     </div>
-    <SearchBar />
     <ul className="navlinks">
-      <HeaderLink name="Home" />
-      <HeaderLink name="About Us" />
-      <HeaderLink name="Contact Us" />
+      <li>Home</li>
+      <li>About us</li>
+      <li>Contact us</li>
     </ul>
   </div>
 );
 
+const Footer = () => <h1>Footer</h1>;
+
+const RestaurantCard = ({ name, cloudinaryImageId, avgRating, cuisines }) => (
+  <div className="card">
+    <div className="cover-img">
+      <img
+        src={
+          "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" +
+          cloudinaryImageId
+        }
+        alt="restaurant-img"
+      />
+    </div>
+    <div>
+      <h2>{name}</h2>
+      <p>{avgRating} Stars</p>
+      <p>{cuisines.join(", ")}</p>
+    </div>
+  </div>
+);
+
+const Body = () => (
+  <div className="container">
+    {RESTAURANTS.map((restaurant) => (
+      <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+    ))}
+  </div>
+);
+
+const AppLayout = () => (
+  <>
+    <Header /> <Body /> <Footer />
+  </>
+);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<NavBarComponent />);
+root.render(<AppLayout />);
