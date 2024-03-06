@@ -1,18 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import RestaurantCard from "./RestaurantCard";
-import { RESTAURANTS } from "../../restaurants";
+import { API_FETCH_SWIGGY_DATA } from "../config";
+import Shimmer from "./Shimmer";
 
-const filterData = (searchText) =>
-  RESTAURANTS.filter((restaurant) => restaurant.info.name.includes(searchText));
+const filterData = (searchText, restaurants) =>
+  restaurants.filter((restaurant) =>
+    restaurant?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase())
+  );
 
 const Body = () => {
-  const [restaurants, setRestaurants] = useState(RESTAURANTS);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
 
+  useEffect(() => {
+    getAllRestaurants();
+  }, []);
+
   const handleSearch = () => {
-    setRestaurants(filterData(searchText));
+    setFilteredRestaurants(filterData(searchText, allRestaurants));
   };
+
+  async function getAllRestaurants() {
+    setIsLoading(true);
+    const response = await fetch(API_FETCH_SWIGGY_DATA);
+    const json = await response.json();
+    setAllRestaurants(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredRestaurants(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setIsLoading(false);
+  }
+  
+  if (!allRestaurants || !filteredRestaurants) return <h1>Problem loading restaurants...</h1>;
 
   return (
     <>
@@ -26,9 +50,13 @@ const Body = () => {
         <input type="button" onClick={handleSearch} value="Search" />
       </div>
       <div className="container">
-        {restaurants.map((restaurant) => (
-          <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
-        ))}
+        {isLoading ? (
+          <Shimmer />
+        ) : (
+          filteredRestaurants.map((restaurant) => (
+            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+          ))
+        )}
       </div>
     </>
   );
