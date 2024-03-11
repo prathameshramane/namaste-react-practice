@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import RestaurantCard from "./RestaurantCard";
 import { API_FETCH_SWIGGY_DATA } from "../config";
@@ -35,8 +36,9 @@ const Body = () => {
     );
     setIsLoading(false);
   }
-  
-  if (!allRestaurants || !filteredRestaurants) return <h1>Problem loading restaurants...</h1>;
+
+  if (!allRestaurants || !filteredRestaurants)
+    return <h1>Problem loading restaurants...</h1>;
 
   return (
     <>
@@ -54,7 +56,12 @@ const Body = () => {
           <Shimmer />
         ) : (
           filteredRestaurants.map((restaurant) => (
-            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+            <Link
+              to={"/restaurant/" + restaurant.info.id}
+              key={restaurant.info.id}
+            >
+              <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+            </Link>
           ))
         )}
       </div>

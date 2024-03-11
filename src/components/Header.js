@@ -1,22 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <div className="navbar">
       <div className="navlogo">
         <img src={logo} alt="logo" />
       </div>
       <ul className="navlinks">
-        <li>Home</li>
-        <li>About us</li>
-        <li>Contact us</li>
+        <li>
+          <Link to={"/"}>Home</Link>
+        </li>
+        <li>
+          <Link to={"/about-us"}>About us</Link>
+        </li>
+        <li>
+          <Link to={"/contact-us"}>Contact us</Link>
+        </li>
         {isLoggedIn ? (
-          <button onClick={() => setIsLoggedIn(false)}>Log Out</button>
+          <Link>Log Out</Link>
         ) : (
-          <button onClick={() => setIsLoggedIn(true)}>Log In</button>
+          <Link to={"/login"}>Log In</Link>
         )}
       </ul>
     </div>
