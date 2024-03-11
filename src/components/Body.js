@@ -1,41 +1,18 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import RestaurantCard from "./RestaurantCard";
-import { API_FETCH_SWIGGY_DATA } from "../config";
 import Shimmer from "./Shimmer";
-
-const filterData = (searchText, restaurants) =>
-  restaurants.filter((restaurant) =>
-    restaurant?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase())
-  );
+import useRestaurantList from "../hooks/useRestaurantList";
 
 const Body = () => {
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-  const [allRestaurants, setAllRestaurants] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchText, setSearchText] = useState("");
-
-  useEffect(() => {
-    getAllRestaurants();
-  }, []);
-
-  const handleSearch = () => {
-    setFilteredRestaurants(filterData(searchText, allRestaurants));
-  };
-
-  async function getAllRestaurants() {
-    setIsLoading(true);
-    const response = await fetch(API_FETCH_SWIGGY_DATA);
-    const json = await response.json();
-    setAllRestaurants(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilteredRestaurants(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setIsLoading(false);
-  }
+  const {
+    allRestaurants,
+    filteredRestaurants,
+    isLoading,
+    searchText,
+    handleSearch,
+    setSearchText,
+  } = useRestaurantList();
 
   if (!allRestaurants || !filteredRestaurants)
     return <h1>Problem loading restaurants...</h1>;

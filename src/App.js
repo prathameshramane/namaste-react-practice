@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
@@ -9,7 +9,9 @@ import Error from "./components/Error";
 import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
 import RestaurantMenu from "./components/RestaurantMenu";
-import LoginPage from "./components/LoginPage";
+
+// Lazy loading
+const LoginPage = lazy(() => import("./components/LoginPage"));
 
 const AppLayout = () => (
   <>
@@ -41,8 +43,12 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "login",
-        element: <LoginPage />
-      }
+        element: (
+          <Suspense fallback={<h1>Loading Login</h1>}>
+            <LoginPage />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);
