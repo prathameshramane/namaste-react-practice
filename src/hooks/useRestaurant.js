@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const useRestaurant = (id) => {
   const [restaurantDetails, setRestaurantDetails] = useState(null);
+  const [restaurantMenu, setRestaurantMenu] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -14,10 +15,16 @@ const useRestaurant = (id) => {
     );
     const json = await response.json();
     setRestaurantDetails(json?.data?.cards[0]?.card?.card?.info);
+    setRestaurantMenu(
+      json?.data?.cards?.[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+        ?.slice(1, -2)
+        ?.map((card) => card?.card?.card)
+        ?.filter((menu) => menu?.itemCards?.length)
+    );
     setIsLoading(false);
   }
 
-  return {restaurantDetails, isLoading};
+  return { restaurantDetails, restaurantMenu, isLoading };
 };
 
 export default useRestaurant;

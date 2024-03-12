@@ -18,17 +18,18 @@ const Body = () => {
     return <h1>Problem loading restaurants...</h1>;
 
   return (
-    <>
-      <div className="search-container">
+    <div className="mx-10 my-5">
+      <div className="my-3">
         <input
+          className="px-4 py-1 border-2 rounded-lg"
           type="text"
           placeholder="Type here..."
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <input type="button" onClick={handleSearch} value="Search" />
+        <input type="button" onClick={handleSearch} value="Search" className="bg-gray-500 text-white px-3 py-1 rounded mx-2" />
       </div>
-      <div className="container">
+      <div className="flex flex-wrap gap-5 py-5">
         {isLoading ? (
           <Shimmer />
         ) : (
@@ -42,7 +43,7 @@ const Body = () => {
           ))
         )}
       </div>
-    </>
+    </div>
   );
 };
 
