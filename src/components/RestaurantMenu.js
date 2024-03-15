@@ -1,13 +1,16 @@
 import { useParams } from "react-router-dom";
+import { useContext } from "react";
 
 import { IMG_CDN } from "../config";
 import useRestaurant from "../hooks/useRestaurant";
 import RestaurantMenuList from "./RestaurantMenuList";
 import ShimmerRestaurantDetils from "./ShimmerRestaurantDetails";
+import UserContext from "../utils/UserContext";
 
 const RestaurantMenu = () => {
   const { id } = useParams();
   const { restaurantDetails, restaurantMenu, isLoading } = useRestaurant(id);
+  const { user } = useContext(UserContext);
 
   return isLoading ? (
     <ShimmerRestaurantDetils />
@@ -31,7 +34,9 @@ const RestaurantMenu = () => {
           src={IMG_CDN + restaurantDetails?.cloudinaryImageId}
         />
       </div>
-      {restaurantMenu?.map(menu => <RestaurantMenuList menuCategory={menu} key={menu.title} />)}
+      {restaurantMenu?.map((menu) => (
+        <RestaurantMenuList menuCategory={menu} key={menu.title} />
+      ))}
     </div>
   );
 };
