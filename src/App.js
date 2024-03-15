@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -10,17 +11,24 @@ import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
 import RestaurantMenu from "./components/RestaurantMenu";
 import UserContext from "./utils/UserContext";
+import appStore from "./store/appStore";
+import Cart from "./components/Cart";
 
 // Lazy loading
 const LoginPage = lazy(() => import("./components/LoginPage"));
 
 const AppLayout = () => {
-  const [user, setUser] = useState({ name: "Prathamesh Ramane", email: "ppramane@gmail.com" });
+  const [user, setUser] = useState({
+    name: "Prathamesh Ramane",
+    email: "ppramane@gmail.com",
+  });
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-      <Header /> <Outlet /> <Footer />
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Header /> <Outlet /> <Footer />
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -53,6 +61,10 @@ const appRouter = createBrowserRouter([
             <LoginPage />
           </Suspense>
         ),
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
   },
