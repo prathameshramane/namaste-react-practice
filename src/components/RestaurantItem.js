@@ -15,7 +15,7 @@ const RestaurantItem = ({ item, deleteItem }) => {
   };
 
   return (
-    <div className="flex gap-4 p-5">
+    <div data-testid="restaurant-item" className="flex gap-4 p-5">
       <div className="w-11/12">
         {item?.isVeg === 1 ? (
           <div className="w-2 h-2 bg-green-500 rounded-full"></div>

@@ -32,6 +32,7 @@ const Body = () => {
         />
         <input
           type="button"
+          name="Search"
           onClick={handleSearch}
           value="Search"
           className="bg-gray-500 text-white px-3 py-1 rounded mx-2"

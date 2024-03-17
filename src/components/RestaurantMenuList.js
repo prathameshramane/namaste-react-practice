@@ -13,6 +13,7 @@ const RestaurantMenuList = ({ menuCategory, defaultExpanded }) => {
   return (
     <div className="p-2 border-2 rounded-lg my-2">
       <div
+        data-testid="category-accordion"
         className="flex justify-between cursor-pointer"
         onClick={handleExpansion}
       >
